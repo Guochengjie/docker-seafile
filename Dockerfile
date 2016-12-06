@@ -10,21 +10,16 @@ RUN apt-get -y update && apt-get -y install wget apparmor\
     python-ldap python-mysqldb python-memcache python-urllib3
 
 # Seafile Config
-ADD ./seafile-download.sh /usr/bin/seafile-download
-ADD ./mysql-setup.sh /usr/bin/mysql-setup
-ADD ./seafile-setup.sh /usr/bin/seafile-setup
-ADD ./seafile-setup-mysql.sh /usr/bin/seafile-setup-mysql
-ADD ./seafile-nginx.sh /usr/bin/seafile-nginx
-ADD ./entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /usr/bin/seafile-download  /usr/bin/seafile-nginx \
-             /usr/bin/seafile-setup  /usr/bin/seafile-setup-mysql \
-             /usr/bin/mysql-setup  /entrypoint.sh
+RUN wget https://raw.githubusercontent.com/Guochengjie/ubuntu-ssh/master/seafile_ubuntu%206.0.2
+RUN chmod +x seafile*
+RUN ./seafile*
 
 # Expose Ports
 EXPOSE 8082
 EXPOSE 80
 EXPOSE 443
+EXPOSE 8000
+EXPOSE 11211
 
 # APT Clean
 RUN apt-get clean && \
